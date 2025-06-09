@@ -1,8 +1,10 @@
 import { ExpensesOutput } from "../components/ExpensesOutput";
 import { useExpense } from "../hooks/useExpense";
+import { useUser } from "../hooks/useUser";
 
 const RecentExpenses = () => {
   const { state } = useExpense();
+
   const recentExpenses = state.filter((expense) => {
     const today = new Date();
     const expenseDate = new Date(expense.date);

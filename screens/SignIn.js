@@ -1,18 +1,27 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Button, Alert } from "react-native";
-
+import { useUser } from "../hooks/useUser";
+import LoadingSpinner from "../components/LoadingSpinner";
+import ErrorMessage from "../components/ErrorMessage";
+import { loginUser } from "../utils/api";
 export default function SignInScreen() {
+  const { setUser } = useUser();
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
+  });
+  const [apiCall, setApiCall] = useState({
+    loading: false,
+    error: null,
   });
 
   const handleChange = (key, value) => {
     setCredentials({ ...credentials, [key]: value });
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const { username, password } = credentials;
+    console.log("Login Credentials:", credentials);
 
     if (!username || !password) {
       return Alert.alert(
@@ -21,10 +30,58 @@ export default function SignInScreen() {
       );
     }
 
-    // Simulate login or integrate your API here
-    console.log("Logging in with:", credentials);
-    Alert.alert("Login Successful", `Welcome, ${username}!`);
+    try {
+      setApiCall({ loading: true, error: null });
+
+      const response = await loginUser(credentials);
+      // console.log("Registration Response:", response);
+      setUser({
+        username: response.username,
+        email: response.email,
+        accessToken: response.access,
+        refreshToken: response.refresh,
+      });
+    } catch (error) {
+      // console.error("Registration Error:", error);
+
+      // If error is an object of validation errors, join them
+      if (typeof error === "object") {
+        // Flatten all error messages into one string
+        const messages = Object.values(error).flat().join("\n");
+
+        setApiCall({
+          loading: false,
+          error: messages || "Something went wrong.",
+        });
+      } else {
+        setApiCall({
+          loading: false,
+          error: error.message || "Something went wrong.",
+        });
+      }
+    } finally {
+      setApiCall((prev) => ({ ...prev, loading: false }));
+    }
+
+    Alert.alert(
+      `Welcome back, ${credentials.username}!`,
+      "You have successfully logged in."
+    );
+    setCredentials({
+      username: "",
+      password: "",
+    });
   };
+
+  // console.log("user", user);
+
+  const clearError = () => {
+    setApiCall((prev) => ({ ...prev, error: null }));
+  };
+
+  if (apiCall.loading) return <LoadingSpinner message="Logging In..." />;
+  if (apiCall.error)
+    return <ErrorMessage message={apiCall.error} onRetry={clearError} />;
 
   return (
     <View style={styles.container}>
@@ -55,11 +112,10 @@ export default function SignInScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 10,
     paddingTop: 50,
     backgroundColor: "#fff",
     flex: 1,
-    justifyContent: "center",
   },
   title: {
     fontSize: 26,
