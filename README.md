@@ -32,12 +32,12 @@ and provides an intuitive interface for financial tracking.
     
   
   ### Steps to Run Locally
-  1. Clone the repository:
+  - 1. Clone the repository:
      ```sh
      git clone https://github.com/your-repo/expense-manager.git
-  2.set up apis
-  3.npm install
-  3.npm start
+  - 2.set up apis
+  - 3.npm install
+  - 3.npm start
 
 
 
@@ -46,20 +46,20 @@ and provides an intuitive interface for financial tracking.
 
 ### Project Structure
 
-  ├── assets/               # Static assets (images, fonts)
-  ├── components/           # Reusable components
-  ├── contexts/             # Context providers
-  │   ├── screens/          # App screens
-  │   │   ├── auth/         # Authentication screens
-  │   │   ├── expense overview/     # Expense management screens
-  │   │   └── mangage expense
-  │   ├── services/         # API services
-  │   ├── utils/            # Utility functions
-  │   └── App.js            # Main application component
-  ├── .gitignore
-  ├── app.json              # Expo configuration
-  ├── package.json
-  └── README.md
+ - ├── assets/               # Static assets (images, fonts)
+ - ├── components/           # Reusable components
+ - ├── contexts/             # Context providers
+ - ├── screens/          # App screens
+ - │   │   ├── auth/         # Authentication screens
+ - │   │   ├── expense overview/     # Expense management screens
+       └── mangage expense
+  -├── services/         # API services
+  -├── utils/            # Utility functions
+  -│── App.js            # Main application component
+  -├── .gitignore
+  -├── app.json              # Expo configuration
+
+
 
 
 
