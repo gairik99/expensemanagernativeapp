@@ -39,20 +39,38 @@ and provides an intuitive interface for financial tracking.
   3.npm install
   3.npm start
 
-### Project Structure
-expense-manager-app/
-├── assets/               # Static assets (images, fonts)
 
-├── components/           # Reusable components
-├── contexts/             # Context providers
-│   ├── screens/          # App screens
-│   │   ├── auth/         # Authentication screens
-│   │   ├── expense overview/     # Expense management screens
-│   │   └── mangage expense
-│   ├── services/         # API services
-│   ├── utils/            # Utility functions
-│   └── App.js            # Main application component
-├── .gitignore
-├── app.json              # Expo configuration
-├── package.json
-└── README.md
+
+
+
+
+### Project Structure
+
+  ├── assets/               # Static assets (images, fonts)
+  ├── components/           # Reusable components
+  ├── contexts/             # Context providers
+  │   ├── screens/          # App screens
+  │   │   ├── auth/         # Authentication screens
+  │   │   ├── expense overview/     # Expense management screens
+  │   │   └── mangage expense
+  │   ├── services/         # API services
+  │   ├── utils/            # Utility functions
+  │   └── App.js            # Main application component
+  ├── .gitignore
+  ├── app.json              # Expo configuration
+  ├── package.json
+  └── README.md
+
+
+
+
+
+
+
+
+
+
+
+
+
+
