@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import { GlobalStyles } from "../constants/styles";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Decimal from "decimal.js";
 
 const ExpenseSummary = ({ periodLen, expenses }) => {
@@ -11,7 +12,14 @@ const ExpenseSummary = ({ periodLen, expenses }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.periodText}>{periodLen}</Text>
-      <Text style={styles.amountText}>${formattedTotal}</Text>
+      <Text style={styles.amountText}>
+        <FontAwesome5
+          name="rupee-sign"
+          size={20}
+          color={GlobalStyles.colors.primary500}
+        />
+        {formattedTotal}
+      </Text>
     </View>
   );
 };

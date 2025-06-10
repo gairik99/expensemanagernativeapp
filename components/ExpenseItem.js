@@ -1,6 +1,7 @@
 import { Pressable, View, Text, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { GlobalStyles } from "../constants/styles";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const ExpenseItem = ({ description, amount, date, id }) => {
   // console.log("ExpenseItem", amount);
@@ -21,7 +22,12 @@ const ExpenseItem = ({ description, amount, date, id }) => {
           <Text style={styles.text}>{date}</Text>
         </View>
         <View style={styles.amountContainer}>
-          <Text style={styles.amount}>${amount}</Text>
+          <FontAwesome
+            name="rupee"
+            size={16}
+            color={GlobalStyles.colors.primary50}
+          />
+          <Text style={styles.amount}>{amount}</Text>
         </View>
       </View>
     </Pressable>
@@ -56,6 +62,7 @@ const styles = StyleSheet.create({
   amountContainer: {
     justifyContent: "center",
     alignItems: "center",
+    flexDirection: "row",
   },
   amount: {
     fontSize: 16,
