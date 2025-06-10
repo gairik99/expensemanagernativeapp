@@ -7,6 +7,7 @@ export const ExpensesOutput = ({ expenses, expensePeriod, fallback }) => {
   if (expenses.length > 0) {
     content = <ExpenseList expenses={expenses} />;
   }
+  // console.log("expenses", expenses);
   return (
     <View style={styles.container}>
       <ExpenseSummary periodLen={expensePeriod} expenses={expenses} />

@@ -1,4 +1,5 @@
 import { StatusBar } from "expo-status-bar";
+import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -57,11 +58,11 @@ function AuthOverview() {
 // Main App Navigator Component
 function ExpensesOverview() {
   const navigation = useNavigation();
-  const { clearUser } = useUser();
+  const { clearUser, user } = useUser();
+  const username = user?.username?.substring(0, 2).toUpperCase() || "";
   function logoutHandler() {
     clearUser(); // clears user state, effectively logging out
   }
-
   return (
     <BottomTab.Navigator
       screenOptions={{
@@ -69,6 +70,30 @@ function ExpensesOverview() {
         headerTintColor: "white",
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        headerLeft: ({ tintColor }) => (
+          <View style={{ marginLeft: 15, marginRight: 20 }}>
+            <View
+              style={{
+                backgroundColor: "white", // Or any color you want
+                borderRadius: 20, // Ensures the shape is circular
+                width: 40,
+                height: 40,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  color: GlobalStyles.colors.primary500,
+                  fontSize: 16,
+                  fontWeight: "bold",
+                }}
+              >
+                {username}
+              </Text>
+            </View>
+          </View>
+        ),
         headerRight: ({ tintColor }) => (
           <>
             <IconButton

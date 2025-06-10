@@ -21,7 +21,7 @@ export default function SignInScreen() {
 
   const handleLogin = async () => {
     const { username, password } = credentials;
-    console.log("Login Credentials:", credentials);
+    // console.log("Login Credentials:", credentials);
 
     if (!username || !password) {
       return Alert.alert(

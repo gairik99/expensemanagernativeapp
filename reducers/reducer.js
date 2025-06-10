@@ -2,8 +2,7 @@ export const expenseReducer = (state, { type, payload }) => {
   //   console.log("Reducer called", payload);
   switch (type) {
     case "ADD":
-      const id = Math.random().toString(36).substring(2, 9);
-      return [{ ...payload, id: id }, ...state];
+      return [payload, ...state];
     case "UPDATE":
       const updatedExpenseIndex = state.findIndex(
         (expense) => expense.id === payload.id
@@ -12,7 +11,8 @@ export const expenseReducer = (state, { type, payload }) => {
       const updatedExpenses = [...state];
       updatedExpenses[updatedExpenseIndex] = updatedExpense;
       return updatedExpenses;
-
+    case "SET":
+      return payload;
     case "DELETE":
       const filteredExpenses = state.filter(
         (expense) => expense.id !== payload

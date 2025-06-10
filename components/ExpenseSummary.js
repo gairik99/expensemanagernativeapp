@@ -1,14 +1,17 @@
 import { View, Text, StyleSheet } from "react-native";
 import { GlobalStyles } from "../constants/styles";
+import Decimal from "decimal.js";
 
 const ExpenseSummary = ({ periodLen, expenses }) => {
   const totalExpenses = expenses?.reduce((sum, expense) => {
-    return sum + expense.amount;
-  }, 0);
+    return sum.plus(new Decimal(expense.amount || 0));
+  }, new Decimal(0));
+
+  const formattedTotal = totalExpenses.toFixed(2); //
   return (
     <View style={styles.container}>
       <Text style={styles.periodText}>{periodLen}</Text>
-      <Text style={styles.amountText}>$ {totalExpenses}</Text>
+      <Text style={styles.amountText}>${formattedTotal}</Text>
     </View>
   );
 };

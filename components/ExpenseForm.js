@@ -2,17 +2,16 @@ import { Alert, StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
 import Input from "./Input";
 import Button from "./Button";
-import { useNavigation } from "@react-navigation/native";
+
 const ExpenseForm = ({
   onCancel,
   onSubmit,
   submitButtonLabel,
   defaultValues,
 }) => {
-  const navigation = useNavigation();
   const [inputValues, setInputValues] = useState({
     amount: defaultValues?.amount?.toString() || "",
-    date: defaultValues?.date.toISOString().slice(0, 10) || "",
+    date: defaultValues?.date || "",
     description: defaultValues?.description || "",
   });
   const inputChangeHandler = (inputIdentity, inputValue) => {
@@ -24,28 +23,37 @@ const ExpenseForm = ({
   };
   // console.log("ExpenseForm", inputValues);
   const confirmHandler = () => {
-    const expenseData = {
-      amount: parseFloat(inputValues.amount),
-      date: new Date(inputValues.date),
-      description: inputValues.description,
-    };
-    onSubmit(expenseData);
-    const isAmountValid = isNaN(expenseData?.amount) && expenseData?.amount > 0;
-    const isDateValid = expenseData?.date.toString() === "Invalid Date";
-    const isDescriptionValid = expenseData?.description.trim().length < 10;
-    if (isAmountValid || isDateValid || isDescriptionValid) {
+    const { amount, date, description } = inputValues;
+
+    const parsedAmount = parseFloat(amount);
+    const parsedDate = new Date(date);
+    const isAmountInvalid = isNaN(parsedAmount) || parsedAmount <= 0;
+    const isDateInvalid =
+      isNaN(parsedDate.getTime()) || date.trim().length !== 10;
+    const isDescriptionInvalid = description.trim().length < 5;
+
+    if (isAmountInvalid || isDateInvalid || isDescriptionInvalid) {
       Alert.alert(
         "Invalid input",
-        "Please check your input values. Amount should be a positive number, date should be valid, and description should be at least 10 characters long.",
+        "Please check your input values:\n- Amount must be a positive number\n- Date must be valid (YYYY-MM-DD)\n- Description must be at least 5 characters long.",
         [{ text: "Okay" }]
       );
       return;
     }
-    navigation.goBack();
+
+    const expenseData = {
+      amount: parsedAmount,
+      date: parsedDate.toISOString().slice(0, 10),
+      description: description.trim(),
+    };
+
+    onSubmit(expenseData);
   };
   return (
     <View style={styles.formContainer}>
-      <Text style={styles.text}>Add Expense</Text>
+      <Text style={styles.text}>
+        {defaultValues?.id ? "Update Expense" : "Add Expense"}
+      </Text>
       <View style={styles.inputRow}>
         <Input
           label="Amount"
