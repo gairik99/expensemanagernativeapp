@@ -15,6 +15,7 @@ import { UserProvider } from "./context/userContext";
 import SignUpScreen from "./screens/Signup";
 import SignInScreen from "./screens/SignIn";
 import { useUser } from "./hooks/useUser";
+import { useExpense } from "./hooks/useExpense";
 
 // Create navigators outside components
 const Stack = createNativeStackNavigator();
@@ -59,9 +60,11 @@ function AuthOverview() {
 function ExpensesOverview() {
   const navigation = useNavigation();
   const { clearUser, user } = useUser();
+  const { expenseDispatch } = useExpense();
   const username = user?.username?.substring(0, 2).toUpperCase() || "";
   function logoutHandler() {
-    clearUser(); // clears user state, effectively logging out
+    clearUser();
+    expenseDispatch({ type: "CLEAR_ALL" }); // clears user state, effectively logging out
   }
   return (
     <BottomTab.Navigator

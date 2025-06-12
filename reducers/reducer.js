@@ -18,6 +18,8 @@ export const expenseReducer = (state, { type, payload }) => {
         (expense) => expense.id !== payload
       );
       return filteredExpenses;
+    case "CLEAR_ALL":
+      return [];
     default:
       return state;
   }
